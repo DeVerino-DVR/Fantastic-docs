@@ -23,8 +23,8 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm install
-      - run: npx vitepress build
+      - run: npm ci
+      - run: node ./node_modules/vitepress/bin/vitepress.js build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .vitepress/dist
