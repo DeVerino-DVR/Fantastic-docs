@@ -28,28 +28,6 @@ set ox:primaryShade 8
 
 ---
 
-## Police
-
-Convar `ox:font` — police utilisée dans les menus et interfaces.
-
-```lua
-set ox:font "Roboto"
-```
-
-**Défaut :** `Roboto`
-
----
-
-## Bannière
-
-Convar `ox:banner` — image bannière par défaut pour les menus (si aucun `banner` n'est passé dans `lib.registerMenu`).
-
-```lua
-set ox:banner "https://example.com/banner.png"
-```
-
----
-
 ## Locale
 
 Convar `ox:locale` — langue par défaut pour les traductions.
@@ -69,20 +47,6 @@ set ox:userLocales 1
 ```
 
 **Défaut :** `1`
-
----
-
-## Sécurité NUI
-
-Convar `ox_lib_nui_key` — clé AES-256 (44 caractères) utilisée pour le chiffrement NUI. **Obligatoire** pour que l'UI fonctionne.
-
-```lua
-set ox_lib_nui_key "votre_cle_44_caracteres_ici..."
-```
-
-::: danger
-Cette clé est générée automatiquement à chaque build NUI (`encrypt-build.mjs`). Elle doit être mise à jour dans `server.cfg` après chaque build.
-:::
 
 ---
 
@@ -136,9 +100,7 @@ set ox:printlevel:ma_resource "debug"
 # ox_lib
 set ox:primaryColor "blue"
 set ox:primaryShade 8
-set ox:font "Roboto"
 set ox:locale "fr"
 set ox:callbackTimeout 300000
 set ox:printlevel "info"
-set ox_lib_nui_key "votre_cle_ici..."
 ```
