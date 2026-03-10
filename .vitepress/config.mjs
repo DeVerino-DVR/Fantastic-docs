@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: 'ox_lib — Fantastic RP',
-  description: 'Documentation ox_lib custom pour Fantastic RP',
+  title: 'Fantastic RP — Documentation',
+  description: 'Documentation custom Fantastic RP',
   lang: 'fr-FR',
   base: '/Fantastic-docs/',
   cleanUrls: true,
@@ -11,10 +11,9 @@ export default defineConfig({
     nav: [
       { text: 'Accueil', link: '/' },
       { text: 'Menus', link: '/menus/' },
-      { text: 'UI', link: '/notifications' },
-      { text: 'Vêtements', link: '/clothing' },
-      { text: 'Configuration', link: '/configuration' },
+      { text: 'Interface', link: '/notifications' },
       { text: 'ox_target', link: '/ox-target' },
+      { text: 'Configuration', link: '/configuration' },
     ],
     sidebar: [
       {
@@ -25,7 +24,7 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Menus',
+        text: 'Menus (ox_lib)',
         items: [
           { text: 'Vue d\'ensemble', link: '/menus/' },
           { text: 'List Menu', link: '/menus/list-menu' },
@@ -37,7 +36,7 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Interface',
+        text: 'Interface (ox_lib)',
         items: [
           { text: 'Notifications', link: '/notifications' },
           { text: 'TextUI', link: '/textui' },
@@ -49,10 +48,15 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Systèmes custom',
+        text: 'ox_target',
         items: [
-          { text: 'Vêtements (Clothing)', link: '/clothing' },
-          { text: 'ox_target', link: '/ox-target' },
+          { text: 'Options & Submenus', link: '/ox-target' },
+        ]
+      },
+      {
+        text: 'Vêtements (ox_inventory)',
+        items: [
+          { text: 'Système Clothing', link: '/clothing' },
         ]
       },
     ],
@@ -71,7 +75,7 @@ export default defineConfig({
       next: 'Suivant'
     },
     footer: {
-      message: 'Documentation ox_lib — Fantastic RP',
+      message: 'Documentation Fantastic RP',
     }
   }
 })
