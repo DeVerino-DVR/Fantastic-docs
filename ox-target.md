@@ -139,6 +139,64 @@ submenu = {
 }
 ```
 
+### Persistance avec KVP
+
+Par défaut, l'état des checkboxes est **éphémère** — il se réinitialise à chaque ouverture du menu. Pour **sauvegarder** l'état entre les sessions, utilisez les KVP (Key-Value Pairs) de FiveM.
+
+Le principe :
+- Déclarer l'option comme variable locale (pas inline)
+- Lire le KVP au chargement pour initialiser `checked`
+- Dans `onSelect`, mettre à jour la table **et** le KVP
+- Pas de KVP = état par défaut (décoché)
+
+```lua
+local KVP_CINEMATIC <const> = 'myresource:cinematic'
+
+local cinematicOption = {
+    name = 'hud:cinematic',
+    label = 'Bandes noires',
+    icon = 'fas fa-film',
+    checkbox = true,
+    checked = GetResourceKvpInt(KVP_CINEMATIC) == 1,
+}
+cinematicOption.onSelect = function(data)
+    cinematicOption.checked = data.checked
+    if data.checked then
+        SetResourceKvpInt(KVP_CINEMATIC, 1)
+    else
+        DeleteResourceKvp(KVP_CINEMATIC)
+    end
+    setCinematic(data.checked)
+end
+
+-- Utiliser la variable dans le submenu
+exports.ox_target:addGlobalMyPlayer({
+    {
+        name = 'hud:options',
+        label = 'Affichage',
+        icon = 'fas fa-display',
+        submenu = { cinematicOption },
+    }
+})
+
+-- Restaurer l'état au démarrage
+if cinematicOption.checked then
+    setCinematic(true)
+end
+```
+
+::: tip Pourquoi KVP ?
+Les KVP sont stockés **côté client** par FiveM (persistant entre reconnexions). Pas besoin de base de données serveur. Idéal pour les préférences UI comme le HUD, la minimap, les bandes cinématiques, etc.
+
+- `SetResourceKvpInt(key, 1)` → sauvegarde (coché)
+- `DeleteResourceKvp(key)` → supprime (décoché)
+- `GetResourceKvpInt(key) == 1` → lecture (1 = coché, 0 = décoché/absent)
+:::
+
+::: warning Important
+La variable option doit être déclarée **séparément** (pas inline dans le submenu) pour pouvoir référencer `cinematicOption.checked = ...` dans le callback `onSelect`.
+:::
+
 ---
 
 ## Séparateurs
