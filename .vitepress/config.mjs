@@ -14,6 +14,7 @@ export default defineConfig({
       { text: 'UI', link: '/notifications' },
       { text: 'Vêtements', link: '/clothing' },
       { text: 'Configuration', link: '/configuration' },
+      { text: 'ox_target', link: '/ox-target' },
     ],
     sidebar: [
       {
@@ -51,6 +52,7 @@ export default defineConfig({
         text: 'Systèmes custom',
         items: [
           { text: 'Vêtements (Clothing)', link: '/clothing' },
+          { text: 'ox_target', link: '/ox-target' },
         ]
       },
     ],
