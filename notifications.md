@@ -17,7 +17,7 @@ lib.notify(data: NotifyProps)
 | `subtitle` | `string` | — | Sous-titre (grisé). Supporte les couleurs GTA. |
 | `description` | `string` | — | Corps du message. Supporte les couleurs GTA. |
 | `message` | `string` | — | Alias de `description` (rétrocompatibilité). |
-| `type` | `'info' \| 'warning' \| 'success' \| 'error'` | `'info'` | Couleur de la barre de progression et du badge icône. |
+| `type` | `'info' \| 'warning' \| 'success' \| 'error' \| 'police'` | `'info'` | Couleur de la barre de progression et du badge icône. `police` applique automatiquement le flash rouge/bleu. |
 | `duration` | `number` | `7000` | Durée d'affichage en ms. |
 | `showDuration` | `boolean` | `true` | Affiche/masque la barre de progression. |
 | `icon` | `string` | — | Nom d'icône Font Awesome (ex: `'ban'`, `'check'`). |
@@ -286,3 +286,88 @@ lib.defaultNotify({
     status = 'inform',
 })
 ```
+
+---
+
+## Type `police`
+
+Le type `police` applique automatiquement le flash bicolore rouge/bleu et l'icône bouclier.
+
+```lua
+lib.notify({
+    title = 'Appel d\'urgence',
+    description = 'Braquage en cours au Fleeca Bank.',
+    type = 'police',
+})
+```
+
+---
+
+## Notifications pinnées (`pinned`)
+
+Une notification avec `pinned = true` ne disparaît jamais automatiquement. Elle reste jusqu'à un `lib.dismissNotification(id)` ou un clic sur un bouton d'action.
+
+```lua
+lib.notify({
+    id = 'alert_001',
+    title = 'Alerte permanente',
+    description = 'Cette notification reste affichée.',
+    type = 'police',
+    pinned = true,
+})
+
+lib.dismissNotification('alert_001')
+```
+
+---
+
+## Boutons d'action (`keys`)
+
+Ajoute des boutons cliquables sur la notification. Les notifications avec `keys` sont automatiquement pinnées.
+
+Le joueur appuie sur **ALT** pour activer le curseur, puis clique sur le bouton voulu.
+
+```lua
+---@class NotifyKeyProps
+---@field key string          -- Identifiant interne de l'action
+---@field label string        -- Texte affiché sur le bouton
+---@field dismiss? boolean    -- Si true, la notification disparaît après le clic (défaut: false)
+---@field canInteract? fun(): boolean
+---@field action? fun()
+```
+
+- **`dismiss = false`** (défaut) : boutons disparaissent, flash arrêté, icône check verte. La notification reste.
+- **`dismiss = true`** : icône croix rouge, notification disparaît après 2 secondes.
+
+```lua
+lib.notify({
+    id = 'dispatch_call',
+    title = 'Appel 10-31',
+    description = 'Vol à main armée signalé.',
+    type = 'police',
+    keys = {
+        { key = 'ACCEPT', label = 'Accepter', action = function() acceptCall() end },
+        { key = 'DECLINE', label = 'Refuser', dismiss = true, action = function() declineCall() end },
+    },
+})
+```
+
+---
+
+## Historique dispatch
+
+```lua
+lib.displayNotificationHistory('police')
+```
+
+Ouvre un panel dispatch avec l'historique des notifications avec `keys`. Stocké côté serveur, vidé au redémarrage. ESC ferme le panel.
+
+---
+
+## lib.dismissNotification
+
+```lua
+lib.dismissNotification('dispatch_call')
+```
+
+Dismiss manuellement une notification par son `id`.
