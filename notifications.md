@@ -325,7 +325,7 @@ lib.dismissNotification('alert_001')
 
 Ajoute des boutons cliquables sur la notification. Les notifications avec `keys` sont automatiquement pinnées.
 
-Le joueur appuie sur **ALT** pour activer le curseur, puis clique sur le bouton voulu.
+Le joueur **maintient ALT** pour afficher le curseur, puis clique sur le bouton voulu. Relâcher ALT masque le curseur. Les contrôles de tir sont bloqués pendant que le curseur est actif.
 
 ```lua
 ---@class NotifyKeyProps
@@ -333,7 +333,7 @@ Le joueur appuie sur **ALT** pour activer le curseur, puis clique sur le bouton 
 ---@field label string        -- Texte affiché sur le bouton
 ---@field dismiss? boolean    -- Si true, la notification disparaît après le clic (défaut: false)
 ---@field canInteract? fun(): boolean
----@field action? fun()
+---@field action? fun(data: { id: string, key: string, dismiss: boolean })
 ```
 
 - **`dismiss = false`** (défaut) : boutons disparaissent, flash arrêté, icône check verte. La notification reste.
@@ -346,8 +346,8 @@ lib.notify({
     description = 'Vol à main armée signalé.',
     type = 'police',
     keys = {
-        { key = 'ACCEPT', label = 'Accepter', action = function() acceptCall() end },
-        { key = 'DECLINE', label = 'Refuser', dismiss = true, action = function() declineCall() end },
+        { key = 'ACCEPT', label = 'Accepter', action = function(data) acceptCall() end },
+        { key = 'DECLINE', label = 'Refuser', dismiss = true, action = function(data) declineCall() end },
     },
 })
 ```
@@ -360,7 +360,7 @@ lib.notify({
 lib.displayNotificationHistory('police')
 ```
 
-Ouvre un panel dispatch avec l'historique des notifications avec `keys`. Stocké côté serveur, vidé au redémarrage. ESC ferme le panel.
+Ouvre un panel dispatch avec l'historique des notifications avec `keys`. Le panel s'ouvre avec le curseur actif. Stocké côté serveur, vidé au redémarrage. ESC ferme le panel.
 
 ---
 
